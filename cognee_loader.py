@@ -37,6 +37,16 @@ async def main():
 
     # Create knowledge graph with cognee
     await cognee.cognify()
+    import pathlib
+    from cognee.api.v1.visualize import visualize_graph
+
+    # Use the current working directory instead of __file__:
+    notebook_dir = pathlib.Path.cwd()
+
+    graph_file_path = (notebook_dir / ".artifacts" / "graph_visualization.html").resolve()
+
+    # Make sure to convert to string if visualize_graph expects a string
+    b = await visualize_graph(str(graph_file_path))
 
 if __name__ == '__main__':
     asyncio.run(main())
