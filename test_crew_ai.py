@@ -15,9 +15,28 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+from typing import Type
+from crewai.tools import BaseTool
+from pydantic import BaseModel, Field
+
+class cogeneeInput(BaseModel):
+    """Input schema for cognee search tool"""
+    query: str = Field(..., description="Base cognee search query")
+
+class CogneeTool(BaseTool):
+    name: str = "cognee"
+    description: str = "Searches AGENT MEMORY USING GRAPHS AND VECTOR STORES"
+    args_schema: Type[BaseModel] = cogeneeInput
+
+    async def _run(self, query: str) -> str:
+        import cognee
+        result = await cognee.search(query_text=query)
+        return str(result)
+
+
 @CrewBase
-class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
-    """AnalyzingContractClausesForConflictsAndSimilarities crew"""
+class AnalyzingApartmentHoodCrew:
+    """AnalyzingApartmentHoodCrew crew"""
 
     # vector_search_tool = QdrantVectorSearchTool(
     #     collection_name="contracts_business_5",
@@ -27,12 +46,13 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
     search_tool = SerperDevTool()
     web_rag_tool = WebsiteSearchTool()
     # )
+    cognee_tool = CogneeTool()
 
     @agent
     def manager_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["manager_agent"],
-            tools=[self.search_tool, self.web_rag_tool],
+            tools=[self.search_tool, self.web_rag_tool, self.cognee_tool],
             allow_delegation=True
         )
 
@@ -40,14 +60,14 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
     def location_analysis_specialist(self) -> Agent:
         return Agent(
             config=self.agents_config["location_analysis_specialist"],
-            tools=[self.search_tool, self.web_rag_tool],
+            tools=[self.search_tool, self.web_rag_tool, self.cognee_tool],
         )
 
     @agent
     def home_analysis_specialist(self) -> Agent:
         return Agent(
             config=self.agents_config["home_analysis_specialist"],
-            tools=[self.search_tool, self.web_rag_tool],
+            tools=[self.search_tool, self.web_rag_tool, self.cognee_tool],
         )
 
 
@@ -80,7 +100,7 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
 
     @crew
     def crew(self) -> Crew:
-        """Creates the AnalyzingContractClausesForConflictsAndSimilarities crew"""
+        """Creates the AnalyzingApartmentHoodCrew crew"""
         return Crew(
             agents=self.agents,
             tasks=self.tasks,
@@ -97,7 +117,7 @@ def run():
     inputs = {
         "query": "What are the the apartments i should buy",
     }
-    AnalyzingContractClausesForConflictsAndSimilaritiesCrew().crew().kickoff(
+    AnalyzingApartmentHoodCrew().crew().kickoff(
         inputs=inputs
     )
 

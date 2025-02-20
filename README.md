@@ -39,7 +39,7 @@ pip install -r requirements.txt
 WEAVIATE_API_KEY='your-weaviate-cloud-api-key'    # From Weaviate Cloud Console
 WEAVIATE_URL='your-cluster-url'                   # Your Weaviate Cloud cluster URL (e.g., https://your-cluster.weaviate.network)
 OPENAI_API_KEY='your-openai-api-key'              # From OpenAI platform
-```
+```SERPER_API_KEY ='your-serp-api-key'
 
 ## Running the Example
 

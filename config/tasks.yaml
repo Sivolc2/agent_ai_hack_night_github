@@ -2,19 +2,19 @@
 location_analysis_task:
   description: >
     Analyzed locations to understand where person wants to live
-  expected_output: A dataset containing all relevant places in a certain neigbourhood
+  expected_output: A dataset containing all relevant places in a certain neigbourhood. Use cognee tool
   agent: home_analysis_specialist
 home_analysis_specialist_task:
   description: Your goal is to retrieve the sources of answers for {query}
   expected_output: >
     A list of sources that contain the answers for {query}. 
     We will be using the sources identify where the answer came from.
-    Sources are the sections, paragraphs, or other identifiers that contain the answer.
+    Sources are the sections, paragraphs, or other identifiers that contain the answer. Use cognee tool
   agent: location_analysis_specialist
 generate_report_task:
   description: Generate a report detailing findings with sources using the analysis
     from Task 2. Ensure to provide the specific clauses that were analyzed, show which section and pinpoint which file this came from.
   expected_output: A comprehensive report that includes detailed findings of conflicts,
-    similarities, differences, and sources for the analyzed contract clauses.
+    similarities, differences, and sources for the analyzed contract clauses. Use cognee tool
   agent: manager_agent
   output_file: report.md

@@ -1,20 +1,20 @@
 ---
 location_analysis_specialist:
   role: Location analysis specialist
-  goal: Extract contracts from the internet about the location
+  goal: Extract contracts from the internet about the location Use cognee tool
   backstory: With extensive experience in database management and contract analysis,
     you specialize in retrieving critical contract data from
 
 home_analysis_specialist:
   role: Home Analysis
   goal: Compile the analysis into a comprehensive report detailing findings with sources
-    using the analysis from Task 2.
+    using the analysis from Task 2. Use cognee tool
   backstory: As an expert in generating detailed reports, you transform complex data
     analyses into clear, actionable insights, ensuring stakeholders are well-informed
     and ready to make strategic decisions.
 
 
 manager_agent:
-  role: Your role is to manage the crew and ensure that the crew is able to complete the task.
+  role: Your role is to manage the crew and ensure that the crew is able to complete the task. Use cognee tool
   goal: Identify the appropriate agent to delegate the task to.
   backstory: You are an expert in managing crews and also doing the apartment analysis.
