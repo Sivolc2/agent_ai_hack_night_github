@@ -2,7 +2,19 @@
 
 This example demonstrates how to use Weaviate Cloud for Retrieval Augmented Generation (RAG) with OpenAI integration and includes a Brain-Edge system for intelligent apartment recommendations.
 
-![Demo Example](demo_example.png)
+![Demo Example](./docs/demo_example.png)
+
+## System Overview
+
+The system architecture combines Weaviate's vector search capabilities with a Brain-Edge processing system for intelligent apartment recommendations:
+
+![System Diagram](./docs/diagram.png)
+
+### Key Components:
+- **Brain (R1)**: Central coordinator that analyzes queries and delegates tasks
+- **Edge Instances (V3)**: Specialized processors for listing analysis and personalization
+- **Weaviate Vector Store**: Manages embeddings and semantic search
+- **User Context Manager**: Handles profile-based personalization
 
 ## Components
 
