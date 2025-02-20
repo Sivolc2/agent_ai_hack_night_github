@@ -1,6 +1,7 @@
 requests
 python-dotenv
-arize-phoenix>=3.0.0
-openinference-instrumentation-openai>=0.1.1
+weaviate-client>=4.4.0
 openai>=1.0.0
+python-dotenv>=1.0.0
+numpy>=1.24.0
 

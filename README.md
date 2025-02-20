@@ -1,6 +1,11 @@
-# Phoenix OpenAI Tracing Example
+# Weaviate RAG Example
 
-This example demonstrates how to use Arize Phoenix to trace OpenAI API calls in your application.
+This example demonstrates how to use Weaviate Cloud for Retrieval Augmented Generation (RAG) with OpenAI integration. The example shows how to:
+
+1. Set up a Weaviate Cloud client
+2. Create a collection with vector search and generative capabilities
+3. Import and chunk text data
+4. Perform RAG operations (single object and grouped generation)
 
 ## Setup
 
@@ -9,39 +14,53 @@ This example demonstrates how to use Arize Phoenix to trace OpenAI API calls in 
 pip install -r requirements.txt
 ```
 
-2. Set your OpenAI API key:
-```bash
-export OPENAI_API_KEY='your-api-key-here'
-```
+2. Sign up for Weaviate Cloud:
+   - Go to [Weaviate Cloud](https://console.weaviate.cloud/)
+   - Create an account and set up a cluster
+   - Get your cluster URL and API key
 
-3. Start Phoenix server:
+3. Create a `.env` file with your API keys:
 ```bash
-phoenix serve
+WEAVIATE_API_KEY='your-weaviate-cloud-api-key'    # From Weaviate Cloud Console
+WEAVIATE_URL='your-cluster-url'                   # Your Weaviate Cloud cluster URL (e.g., https://your-cluster.weaviate.network)
+OPENAI_API_KEY='your-openai-api-key'              # From OpenAI platform
 ```
-This will start the Phoenix server on http://localhost:6006 with the gRPC endpoint on port 4317.
 
 ## Running the Example
 
 1. Run the example script:
 ```bash
-python phoenix_example.py
+python weaviate_rag_example.py
 ```
 
-2. View traces:
-- Open http://localhost:6006 in your browser
-- Navigate to the Traces section
-- You should see your OpenAI API calls being traced
+2. The script will:
+   - Download sample text about Git
+   - Create a Weaviate collection
+   - Import chunked text data
+   - Demonstrate RAG capabilities:
+     - Generate a haiku from a single chunk
+     - Perform semantic search and generate a tweet
 
 ## Features
 
-- Automatic tracing of OpenAI API calls
-- Error handling and logging
-- Example of generating a haiku using GPT-4
-- Integration with Phoenix for monitoring and debugging
+- Text chunking with overlap
+- Vector search using OpenAI embeddings
+- Single object text generation
+- Grouped text generation
+- Semantic search integration
 
 ## Notes
 
-- Make sure the Phoenix server is running before executing the script
-- The example uses GPT-4, but you can modify the model in the code
-- All API calls are automatically traced and visible in the Phoenix UI
+- The example uses GPT-4 through OpenAI's API
+- Text is chunked into 150-word pieces with 25-word overlap
+- The collection is recreated each time for demonstration purposes
+- All operations are performed using Weaviate's Python client v4
+- Uses Weaviate Cloud for deployment (no local setup needed)
+
+## Additional Resources
+
+- [Weaviate Cloud Documentation](https://weaviate.io/developers/weaviate/installation/weaviate-cloud)
+- [OpenAI Documentation](https://platform.openai.com/docs)
+- [RAG Best Practices](https://weaviate.io/developers/weaviate/starter-guides/retrieval-augmented-generation)
+- [Weaviate Cloud Console](https://console.weaviate.cloud/)
 
