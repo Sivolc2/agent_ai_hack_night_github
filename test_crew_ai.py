@@ -51,7 +51,20 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
         )
 
 
+    @task
+    def manager_investigation_task(self, inputs: dict) -> dict:
+        """
+        Simple example task that uses the manager_agent.
+        This task must return a dict so the crew can produce an output.
+        """
+        query = inputs.get("query", "N/A")
 
+        # Here is where you'd call the agent with the query
+        # For a trivial example, we do a plain LLM call:
+        response = self.manager_agent().run(f"Analyze this query: {query}")
+
+        # Return the task output as a dict
+        return {"analysis": response}
 
     @crew
     def crew(self) -> Crew:
