@@ -6,18 +6,18 @@ retrieve_contracts_task:
     You need to retreve relevant contracts from the vector database based on the query: {query}
   expected_output: A dataset containing all relevant contracts with specific clauses
     extracted, ready for analysis.
-  agent: data_retrieval_analysis_specialist
+  agent: home_analysis_specialist
 source_citer_task:
   description: Your goal is to retrieve the sources of answers for {query}
   expected_output: >
     A list of sources that contain the answers for {query}. 
     We will be using the sources identify where the answer came from.
     Sources are the sections, paragraphs, or other identifiers that contain the answer.
-  agent: source_citer_specialist
+  agent: location_analysis_specialist
 generate_report_task:
   description: Generate a report detailing findings with sources using the analysis
     from Task 2. Ensure to provide the specific clauses that were analyzed, show which section and pinpoint which file this came from.
   expected_output: A comprehensive report that includes detailed findings of conflicts,
     similarities, differences, and sources for the analyzed contract clauses.
-  agent: report_generation_specialist
+  agent: manager_agent
   output_file: report.md

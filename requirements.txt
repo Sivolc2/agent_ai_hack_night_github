@@ -7,3 +7,4 @@ crewai
 crewai-tools
 pyyaml
 langchain>=0.1.0
+cognee
