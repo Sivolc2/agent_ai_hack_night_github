@@ -62,3 +62,18 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
             process=Process.sequential,
             verbose=True,
         )
+
+
+def run():
+    """
+    Run the crew.
+    """
+    inputs = {
+        "query": "What are the the apartments i should buy",
+    }
+    AnalyzingContractClausesForConflictsAndSimilaritiesCrew().crew().kickoff(
+        inputs=inputs
+    )
+
+if __name__ == "__main__":
+    run()
