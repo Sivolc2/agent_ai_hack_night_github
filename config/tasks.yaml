@@ -1,13 +1,10 @@
 ---
-retrieve_contracts_task:
+location_analysis_task:
   description: >
-    Retrieve contracts from the vector database using QdrantVectorSearchTool
-    Focus on extracting the necessary data for specific clauses that need analysis.
-    You need to retreve relevant contracts from the vector database based on the query: {query}
-  expected_output: A dataset containing all relevant contracts with specific clauses
-    extracted, ready for analysis.
+    Analyzed locations to understand where person wants to live
+  expected_output: A dataset containing all relevant places in a certain neigbourhood
   agent: home_analysis_specialist
-source_citer_task:
+home_analysis_specialist_task:
   description: Your goal is to retrieve the sources of answers for {query}
   expected_output: >
     A list of sources that contain the answers for {query}. 
