@@ -15,6 +15,7 @@ class Colors:
     DIVIDER = '\033[90m'     # Gray
     ENDC = '\033[0m'         # Reset
     BOLD = '\033[1m'         # Bold
+    OUTPUT = '\033[38;5;214m' # Orange for outputs
     
     @staticmethod
     def wrap(color: str, text: str) -> str:
@@ -31,16 +32,17 @@ class BrainEdgeSystem:
         self.verbose = verbose
         self.thought_log = []
         
-    def log_thought(self, agent: str, thought: str):
+    def log_thought(self, agent: str, thought: str, is_output: bool = False):
         """
-        Log a thought from an agent if verbose mode is enabled
+        Log a thought or output from an agent if verbose mode is enabled
         """
         if self.verbose:
             timestamp = datetime.now().isoformat()
             thought_entry = {
                 "timestamp": timestamp,
                 "agent": agent,
-                "thought": thought
+                "thought": thought,
+                "is_output": is_output
             }
             self.thought_log.append(thought_entry)
             
@@ -54,10 +56,15 @@ class BrainEdgeSystem:
                 
             colored_timestamp = Colors.wrap(Colors.DIVIDER, f"[{timestamp}]")
             colored_agent = Colors.wrap(agent_color + Colors.BOLD, agent)
-            colored_thinking = Colors.wrap(Colors.THINKING, "thinking: ")
-            colored_thought = Colors.wrap(Colors.RESPONSE, thought)
             
-            print(f"\n{colored_timestamp} {colored_agent} {colored_thinking}{colored_thought}")
+            if is_output:
+                colored_type = Colors.wrap(Colors.OUTPUT + Colors.BOLD, "output: ")
+                colored_content = Colors.wrap(Colors.OUTPUT, thought)
+            else:
+                colored_type = Colors.wrap(Colors.THINKING, "thinking: ")
+                colored_content = Colors.wrap(Colors.RESPONSE, thought)
+            
+            print(f"\n{colored_timestamp} {colored_agent} {colored_type}{colored_content}")
         
     def brain_decide(self, situation: str) -> str:
         """
@@ -145,7 +152,14 @@ class BrainEdgeSystem:
             
             if thinking_match:
                 self.log_thought("Edge1 (V3)", f"Approach: {thinking_match.group(1).strip()}")
-            responses.append(response_match.group(1).strip() if response_match else response1)
+            
+            if response_match:
+                output = response_match.group(1).strip()
+                self.log_thought("Edge1 (V3)", output, is_output=True)
+                responses.append(output)
+            else:
+                self.log_thought("Edge1 (V3)", response1, is_output=True)
+                responses.append(response1)
             
         if "edge2_command" in commands:
             self.log_thought("Edge2 (V3)", f"Executing command: {commands['edge2_command']}")
@@ -167,7 +181,14 @@ class BrainEdgeSystem:
             
             if thinking_match:
                 self.log_thought("Edge2 (V3)", f"Approach: {thinking_match.group(1).strip()}")
-            responses.append(response_match.group(1).strip() if response_match else response2)
+            
+            if response_match:
+                output = response_match.group(1).strip()
+                self.log_thought("Edge2 (V3)", output, is_output=True)
+                responses.append(output)
+            else:
+                self.log_thought("Edge2 (V3)", response2, is_output=True)
+                responses.append(response2)
             
         return responses
     
@@ -216,7 +237,7 @@ def main():
     for i, response in enumerate(result["edge_responses"], 1):
         edge_color = Colors.EDGE1 if i == 1 else Colors.EDGE2
         print(f"\n{Colors.wrap(edge_color + Colors.BOLD, f'Edge Instance {i}:')}")
-        print(Colors.wrap(edge_color, response))
+        print(Colors.wrap(Colors.OUTPUT, response))
         
     if "thought_log" in result:
         print(f"\n{Colors.wrap(Colors.HEADER + Colors.BOLD, 'Complete Thought Log:')}")
@@ -232,10 +253,16 @@ def main():
                 
             timestamp = Colors.wrap(Colors.DIVIDER, f"[{entry['timestamp']}]")
             agent = Colors.wrap(agent_color + Colors.BOLD, entry["agent"])
-            thought = Colors.wrap(Colors.RESPONSE, entry["thought"])
+            
+            if entry.get("is_output", False):
+                type_label = Colors.wrap(Colors.OUTPUT + Colors.BOLD, "output: ")
+                content = Colors.wrap(Colors.OUTPUT, entry["thought"])
+            else:
+                type_label = Colors.wrap(Colors.THINKING, "thinking: ")
+                content = Colors.wrap(Colors.RESPONSE, entry["thought"])
             
             print(f"{timestamp} {agent}:")
-            print(f"  {thought}\n")
+            print(f"  {type_label}{content}\n")
 
 if __name__ == "__main__":
     main() 
