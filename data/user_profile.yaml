@@ -1,29 +1,5 @@
-personal:
-  age: 28
-  occupation: Software Engineer
-  company_type: Mid-size tech startup
-  education: BS Computer Science
-  years_in_sf: 3
-  relationship_status: Single
-  work_location: SOMA/Financial District
-
-financial:
-  annual_salary: 175000
-  annual_bonus: 25000
-  stock_options: true
-  monthly_budget:
-    housing_max: 3800
-    savings_target: 3000
-    discretionary: 2000
-  student_loans: 22000
-  credit_score: 745
-
-lifestyle:
-  work_schedule:
-    hybrid: true
-    office_days: 3
-    wfh_days: 2
-  
+- name: "John Doe"
+  email: "john.doe@example.com"
   interests:
     - Rock climbing
     - Hiking
@@ -31,69 +7,26 @@ lifestyle:
     - Board games
     - Tech meetups
     - Cryptocurrency
-  
-  fitness:
-    gym_membership: true
-    preferred_activities:
-      - Weightlifting
-      - Bouldering
-      - Running
-    weekly_workout_days: 4
+  skills:
+    - Software Engineering
+    - Python
+    - Cloud Computing
+    - DevOps
+    - Agile Methodologies
+  experience: "Software Engineer with 3 years of experience at a mid-size tech startup. BS in Computer Science. Specializes in full-stack development and cloud architecture."
 
-transportation:
-  primary: Public transit + Walking
-  owns_car: false
-  bike_share_membership: true
-  typical_commute_time: 25
-
-housing_preferences:
-  desired_neighborhoods:
-    - SOMA
-    - Hayes Valley
-    - Mission District
-    - South Beach
-  must_haves:
-    - High-speed internet
-    - In-unit laundry
-    - Dishwasher
-    - Natural light
-  nice_to_haves:
-    - Gym
-    - Roof deck
-    - Package reception
-    - Pet friendly
-  max_roommates: 1
-
-technology:
-  laptop: MacBook Pro M2
-  phone: iPhone 14 Pro
-  subscriptions:
-    - Spotify Premium
-    - Netflix
-    - Amazon Prime
-    - GitHub Pro
-    - Discord Nitro
-
-dining:
-  cooking_frequency: 3 times/week
-  delivery_apps:
-    - DoorDash
-    - Uber Eats
-  favorite_cuisines:
-    - Japanese
-    - Mexican
-    - Thai
-    - California fusion
-  weekly_food_budget: 250
-
-social:
-  friend_circle_size: 12-15
-  weekly_social_activities: 2-3
-  preferred_venues:
-    - Craft breweries
-    - Coffee shops
+- name: "Jane Smith"
+  email: "jane.smith@example.com"
+  interests:
+    - Tech networking
     - Board game cafes
-    - Tech networking events
-  dating_apps:
-    - Hinge
-    - Coffee Meets Bagel
+    - Coffee shops
+    - Fitness
+    - Travel
+  skills:
+    - Full Stack Development
+    - JavaScript
+    - React
+    - Node.js
+    - System Design
+  experience: "Senior Software Developer with 5 years of experience in web development. Focused on building scalable applications and mentoring junior developers."
