@@ -29,7 +29,7 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
     # )
 
     @agent
-    def data_retrieval_analysis_specialist(self) -> Agent:
+    def manager_agent(self) -> Agent:
         return Agent(
             config=self.agents_config["manager_agent"],
             tools=[self.search_tool, self.web_rag_tool],
@@ -37,16 +37,16 @@ class AnalyzingContractClausesForConflictsAndSimilaritiesCrew:
         )
 
     @agent
-    def source_citer_specialist(self) -> Agent:
+    def location_analysis_specialist(self) -> Agent:
         return Agent(
-            config=self.agents_config["source_citer_specialist"],
+            config=self.agents_config["location_analysis_specialist"],
             tools=[self.search_tool, self.web_rag_tool],
         )
 
     @agent
-    def report_generation_specialist(self) -> Agent:
+    def home_analysis_specialist(self) -> Agent:
         return Agent(
-            config=self.agents_config["report_generation_specialist"],
+            config=self.agents_config["home_analysis_specialist"],
             tools=[self.search_tool, self.web_rag_tool],
         )
 
