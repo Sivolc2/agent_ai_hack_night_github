@@ -193,36 +193,49 @@ Remember: You are the brain (R1) coordinating two edge instances (V3).
 def main():
     # Initialize the combined system
     system = RAGBrainEdgeSystem(verbose=True)
-
-    # Example queries to test
-    test_scenarios = [
-        {
-            "query": "Show me apartments in South Beach with a pool",
-            "user_email": None
-        },
-        {
-            "query": "Find pet-friendly apartments under $4000 per month",
-            "user_email": "john.doe@example.com"  # Will get personalized results
-        },
-        {
-            "query": "What apartments are available near tech meetup locations?",
-            "user_email": "jane.smith@example.com"  # Will consider Jane's interests
-        }
-    ]
-
-    # Optional: Add data from URL
-    # system.add_url_data("https://example.com/apartment-listings")
-
-    for scenario in test_scenarios:
+    
+    # Display available user profiles
+    print(f"\n{Colors.wrap(Colors.HEADER + Colors.BOLD, 'Available User Profiles:')}")
+    for i, profile in enumerate(system.user_profiles, 1):
+        print(f"{i}. {profile['name']} ({profile['email']})")
+        print(f"   Interests: {', '.join(profile['interests'])}")
+        print(f"   Skills: {', '.join(profile['skills'])}\n")
+    
+    # Get user selection
+    while True:
+        try:
+            profile_idx = int(input("\nSelect a user profile (enter number): ")) - 1
+            if 0 <= profile_idx < len(system.user_profiles):
+                selected_profile = system.user_profiles[profile_idx]
+                break
+            print("Invalid selection. Please try again.")
+        except ValueError:
+            print("Please enter a valid number.")
+    
+    profile_name = selected_profile['name']
+    print(f"\n{Colors.wrap(Colors.HEADER + Colors.BOLD, 'Selected Profile: ' + profile_name)}")
+    
+    while True:
+        # Get user query
+        print("\nExample questions you can ask:")
+        print("1. Would I like the apartment at 2 Townsend St?")
+        print("2. Find apartments that match my interests")
+        print("3. Which apartments are close to tech meetups?")
+        print("4. Show pet-friendly apartments near my preferred locations")
+        print("\nType 'quit' to exit")
+        
+        query = input("\nEnter your question: ").strip()
+        if query.lower() == 'quit':
+            break
+            
         print(f"\n{Colors.wrap(Colors.HEADER + Colors.BOLD, '='*50)}")
-        print(Colors.wrap(Colors.HEADER + Colors.BOLD, f"Processing Query: {scenario['query']}"))
-        if scenario['user_email']:
-            print(Colors.wrap(Colors.HEADER + Colors.BOLD, f"For User: {scenario['user_email']}"))
+        print(Colors.wrap(Colors.HEADER + Colors.BOLD, f"Processing Query: {query}"))
+        print(Colors.wrap(Colors.HEADER + Colors.BOLD, f"For User: {selected_profile['name']}"))
         print(Colors.wrap(Colors.HEADER + Colors.BOLD, '='*50))
 
         result = system.process_query_with_context(
-            user_query=scenario['query'],
-            user_email=scenario['user_email']
+            user_query=query,
+            user_email=selected_profile['email']
         )
 
         # Display results
@@ -230,10 +243,6 @@ def main():
         for i, listing in enumerate(result["listings"], 1):
             print(f"\n{Colors.wrap(Colors.THINKING, f'Listing {i}:')}")
             print(Colors.wrap(Colors.RESPONSE, json.dumps(listing, indent=2)))
-
-        if "user_context" in result:
-            print(f"\n{Colors.wrap(Colors.HEADER + Colors.BOLD, 'User Profile:')}")
-            print(Colors.wrap(Colors.THINKING, json.dumps(result["user_context"], indent=2)))
 
         print(f"\n{Colors.wrap(Colors.HEADER + Colors.BOLD, 'Brain Analysis:')}")
         if "thinking" in result["brain_decisions"]:
@@ -244,6 +253,8 @@ def main():
             edge_color = Colors.EDGE1 if i == 1 else Colors.EDGE2
             print(f"\n{Colors.wrap(edge_color + Colors.BOLD, f'Edge Instance {i}:')}")
             print(Colors.wrap(Colors.OUTPUT, response))
+            
+        print("\n" + Colors.wrap(Colors.DIVIDER, "-"*50))
 
 if __name__ == "__main__":
     main() 
